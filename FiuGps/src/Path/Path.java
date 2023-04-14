@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Graph.Edge;
+import Graph.GraphExtension;
+import Graph.GraphImplementation;
 import Graph.Vertex;
 
 public class Path {
@@ -89,6 +91,9 @@ public class Path {
 		edges.add(new Edge(v8, v10, 2136));
 		edges.add(new Edge(v7, v10, 2666));
 		edges.add(new Edge(v10, v12, 1813));
+
+		GraphImplementation gp = new GraphImplementation(vertices, edges);
+		gp.incidentEdges(v17);
 
 	}
 }
