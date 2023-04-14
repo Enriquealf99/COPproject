@@ -65,10 +65,30 @@ public class Path {
 
 		List<Edge> edges = new ArrayList<>();
 
-		edges.add(new Edge(v1, v13, 200));
-		edges.add(new Edge(v1, v16, 400));
-		edges.add(new Edge(v1, v12, 600));
-		edges.add(new Edge(v16, v7, 300));
+		edges.add(new Edge(v1, v13, 1260));
+		edges.add(new Edge(v1, v16, 860));
+		edges.add(new Edge(v1, v12, 3705));
+		edges.add(new Edge(v13, v2, 973));
+		edges.add(new Edge(v13, v16, 961));
+		edges.add(new Edge(v16, v7, 1350));
+		edges.add(new Edge(v7, v3, 1015));
+		edges.add(new Edge(v7, v9, 1160));
+		edges.add(new Edge(v7, v17, 916));
+		edges.add(new Edge(v3, v4, 1071));
+		edges.add(new Edge(v3, v11, 1800));
+		edges.add(new Edge(v4, v5, 750));
+		edges.add(new Edge(v5, v15, 1050));
+		edges.add(new Edge(v15, v11, 940));
+		edges.add(new Edge(v11, v5, 650));
+		edges.add(new Edge(v11, v9, 2470));
+		edges.add(new Edge(v3, v9, 805));
+		edges.add(new Edge(v9, v17, 720));
+		edges.add(new Edge(v9, v8, 1190));
+		edges.add(new Edge(v17, v8, 1058));
+		edges.add(new Edge(v8, v6, 1173));
+		edges.add(new Edge(v8, v10, 2136));
+		edges.add(new Edge(v7, v10, 2666));
+		edges.add(new Edge(v10, v12, 1813));
 
 	}
 }
