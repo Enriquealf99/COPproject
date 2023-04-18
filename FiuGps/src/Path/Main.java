@@ -91,11 +91,35 @@ public class Main {
 		edges.add(new Edge(v8, v10, 2136));
 		edges.add(new Edge(v7, v10, 2666));
 		edges.add(new Edge(v10, v12, 1813));
+		edges.add(new Edge(v13, v1, 1260));
+		edges.add(new Edge(v16, v1, 860));
+		edges.add(new Edge(v12, v1, 3705));
+		edges.add(new Edge(v2, v13, 973));
+		edges.add(new Edge(v16, v13, 961));
+		edges.add(new Edge(v7, v16, 1350));
+		edges.add(new Edge(v3, v7, 1015));
+		edges.add(new Edge(v9, v7, 1160));
+		edges.add(new Edge(v17, v7, 916));
+		edges.add(new Edge(v4, v3, 1071));
+		edges.add(new Edge(v11, v3, 1800));
+		edges.add(new Edge(v5, v4, 750));
+		edges.add(new Edge(v15, v5, 1050));
+		edges.add(new Edge(v11, v15, 940));
+		edges.add(new Edge(v5, v11, 650));
+		edges.add(new Edge(v9, v11, 2470));
+		edges.add(new Edge(v9, v3, 805));
+		edges.add(new Edge(v17, v9, 720));
+		edges.add(new Edge(v8, v9, 1190));
+		edges.add(new Edge(v8, v17, 1058));
+		edges.add(new Edge(v6, v8, 1173));
+		edges.add(new Edge(v10, v8, 2136));
+		edges.add(new Edge(v10, v7, 2666));
+		edges.add(new Edge(v12, v10, 1813));
 
 		GraphImplementation gp = new GraphImplementation(vertices, edges);
 
 		Path p = new Path();
-		p.shortestPath(gp, v1, v5);
+		System.out.println(p.shortestPath(gp, v1, v5));
 
 	}
 }

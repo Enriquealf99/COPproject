@@ -12,12 +12,10 @@ import Graph.Edge;
 public class Path {
 
     public List<PathVertex> dijkstra(GraphExtension g, Vertex v) {
-
-        List<PathVertex> pathvertices = initializeSingleSource(g, v);
-        List<PathVertex> unvisited = new ArrayList<>(pathvertices);
+        List<PathVertex> pathVertices = initializeSingleSource(g, v);
+        List<PathVertex> unvisited = new ArrayList<>(pathVertices);
 
         while (!unvisited.isEmpty()) {
-
             PathVertex current = null;
             int min = Integer.MAX_VALUE;
             for (PathVertex pv : unvisited) {
@@ -27,7 +25,7 @@ public class Path {
                 }
             }
 
-            if (current == null) {
+            if (min == Integer.MAX_VALUE) {
                 break;
             }
 
@@ -40,7 +38,7 @@ public class Path {
                 Vertex adjacentV = edges.vertex2;
                 PathVertex adjacentPV = null;
 
-                for (PathVertex pv : pathvertices) {
+                for (PathVertex pv : pathVertices) {
                     if (pv.getLabel().equals(adjacentV.getLabel())) {
                         adjacentPV = pv;
                         break;
@@ -53,8 +51,7 @@ public class Path {
             }
         }
 
-        return pathvertices;
-
+        return pathVertices;
     }
 
     private void relaxEdge(PathVertex current, PathVertex adjacentPV, int edgeWeight) {
