@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Path",
+            "name": "Main",
             "request": "launch",
-            "mainClass": "Path.Path",
-            "projectName": "COPproject_de3f092f"
+            "mainClass": "Path.Main",
+            "projectName": "COPproject_aa18b05c"
         },
         {
             "args": [

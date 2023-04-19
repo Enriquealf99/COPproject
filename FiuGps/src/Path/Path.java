@@ -1,100 +1,111 @@
 package Path;
 
+import Graph.GraphExtension;
+import Graph.Vertex;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import Graph.Edge;
+import Graph.GraphExtension;
 import Graph.GraphImplementation;
 import Graph.Vertex;
 
 public class Path {
 
-	public static void main(String[] args) {
+    public List<PathVertex> dijkstra(GraphExtension g, Vertex v) {
+        List<PathVertex> pathVertices = initializeSingleSource(g, v);
+        List<PathVertex> unvisited = new ArrayList<>(pathVertices);
 
-		List<Vertex> vertices = new ArrayList<>();
+        while (!unvisited.isEmpty()) {
+            PathVertex current = null;
+            int min = Integer.MAX_VALUE;
+            for (PathVertex pv : unvisited) {
+                if (pv.getDistance() < min) {
+                    current = pv;
+                    min = pv.getDistance();
+                }
+            }
 
-		Vertex v1 = new Vertex("PG6");
-		vertices.add(v1);
+            if (min == Integer.MAX_VALUE) {
+                break;
+            }
 
-		Vertex v2 = new Vertex("PG5");
-		vertices.add(v2);
+            current.setVisited(true);
+            List<Edge> ie = g.incidentEdges(current);
 
-		Vertex v3 = new Vertex("Graham Center");
-		vertices.add(v3);
+            unvisited.remove(current);
 
-		Vertex v4 = new Vertex("PG1");
-		vertices.add(v4);
+            for (Edge edges : ie) {
+                Vertex adjacentV = edges.vertex2;
+                PathVertex adjacentPV = null;
 
-		Vertex v5 = new Vertex("Blue Parking Grarage (PG2)");
-		vertices.add(v5);
+                for (PathVertex pv : pathVertices) {
+                    if (pv.getLabel().equals(adjacentV.getLabel())) {
+                        adjacentPV = pv;
+                        break;
+                    }
+                }
 
-		Vertex v6 = new Vertex("Panther Hall");
-		vertices.add(v6);
+                if (adjacentPV != null && !adjacentPV.isVisited()) {
+                    relaxEdge(current, adjacentPV, edges.weight);
+                }
+            }
+        }
 
-		Vertex v7 = new Vertex("Green Library");
-		vertices.add(v7);
+        return pathVertices;
+    }
 
-		Vertex v8 = new Vertex("University Towers");
-		vertices.add(v8);
+    private void relaxEdge(PathVertex current, PathVertex adjacentPV, int edgeWeight) {
+        int newDistance = current.getDistance() + edgeWeight;
+        if (newDistance < adjacentPV.getDistance()) {
+            adjacentPV.setDistance(newDistance);
+            adjacentPV.setParent(current);
+        }
+    }
 
-		Vertex v9 = new Vertex("Charles E. Perry");
-		vertices.add(v9);
+    private List<PathVertex> initializeSingleSource(GraphExtension g, Vertex source) {
+        List<PathVertex> pathVertices = new ArrayList<>();
 
-		Vertex v10 = new Vertex("College of Law");
-		vertices.add(v10);
+        for (Vertex v : g.getVertices()) {
+            PathVertex pv = new PathVertex(v.getLabel());
+            if (v.getLabel().equals(source.getLabel())) {
+                pv.setDistance(0);
+            }
+            pathVertices.add(pv);
+        }
 
-		Vertex v11 = new Vertex("Frost Art Museum");
-		vertices.add(v11);
+        return pathVertices;
+    }
 
-		Vertex v12 = new Vertex("Parking Garage 3");
-		vertices.add(v12);
+    public List<Vertex> shortestPath(GraphExtension g, Vertex source, Vertex target) {
+        List<PathVertex> pathVertices = dijkstra(g, source);
 
-		Vertex v13 = new Vertex("Parking Garage 4 (Red Parking Garage)");
-		vertices.add(v13);
+        PathVertex targetPV = null;
+        for (PathVertex pv : pathVertices) {
+            if (pv.getLabel().equals(target.getLabel())) {
+                targetPV = pv;
+                break;
+            }
+        }
 
-		Vertex v14 = new Vertex("college of Business");
-		vertices.add(v14);
+        if (targetPV == null) {
+            throw new IllegalArgumentException("Target vertex not found in the graph");
+        }
 
-		Vertex v15 = new Vertex("Wertheim School of music and preforming arts");
-		vertices.add(v15);
+        LinkedList<Vertex> shortestPath = new LinkedList<>();
+        if (targetPV.getDistance() == Integer.MAX_VALUE) {
+            return shortestPath; // Empty path, since no path exists between the source and target vertices
+        }
 
-		Vertex v16 = new Vertex("Knight Foundation School of Computing and Information Sciences");
-		vertices.add(v16);
+        PathVertex current = targetPV;
+        while (current != null) {
+            shortestPath.addFirst(current);
+            current = current.getParent();
+        }
 
-		Vertex v17 = new Vertex("Fiu the Honors College");
-		vertices.add(v17);
+        return shortestPath;
+    }
 
-		List<Edge> edges = new ArrayList<>();
-
-		edges.add(new Edge(v1, v13, 1260));
-		edges.add(new Edge(v1, v16, 860));
-		edges.add(new Edge(v1, v12, 3705));
-		edges.add(new Edge(v13, v2, 973));
-		edges.add(new Edge(v13, v16, 961));
-		edges.add(new Edge(v16, v7, 1350));
-		edges.add(new Edge(v7, v3, 1015));
-		edges.add(new Edge(v7, v9, 1160));
-		edges.add(new Edge(v7, v17, 916));
-		edges.add(new Edge(v3, v4, 1071));
-		edges.add(new Edge(v3, v11, 1800));
-		edges.add(new Edge(v4, v5, 750));
-		edges.add(new Edge(v5, v15, 1050));
-		edges.add(new Edge(v15, v11, 940));
-		edges.add(new Edge(v11, v5, 650));
-		edges.add(new Edge(v11, v9, 2470));
-		edges.add(new Edge(v3, v9, 805));
-		edges.add(new Edge(v9, v17, 720));
-		edges.add(new Edge(v9, v8, 1190));
-		edges.add(new Edge(v17, v8, 1058));
-		edges.add(new Edge(v8, v6, 1173));
-		edges.add(new Edge(v8, v10, 2136));
-		edges.add(new Edge(v7, v10, 2666));
-		edges.add(new Edge(v10, v12, 1813));
-
-		GraphImplementation gp = new GraphImplementation(vertices, edges);
-		gp.incidentEdges(v17);
-
-	}
 }
-
-// method to find the shortest path
