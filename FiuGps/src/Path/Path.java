@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Graph.Edge;
-import Graph.GraphExtension;
 import Graph.GraphImplementation;
 import Graph.Vertex;
 
