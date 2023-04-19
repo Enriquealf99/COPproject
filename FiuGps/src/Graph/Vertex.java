@@ -1,9 +1,8 @@
 package Graph;
 
 public class Vertex {
-	private String label;   
+    private String label;
 
-    
     public Vertex(String label) {
         this.label = label;
     }

@@ -1,47 +1,108 @@
 package Path;
 
+import Graph.GraphExtension;
+import Graph.Vertex;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import Graph.Edge;
-import Graph.Vertex;
-
 
 public class Path {
-	
-	public static void main(String[] args) {
-		
-		List<Vertex> vertices = new ArrayList<>();
-		vertices.add(new Vertex("PG6"));
-		vertices.add(new Vertex("PG5")); 
-		vertices.add(new Vertex("Graham Center"));
-		vertices.add(new Vertex("PG1"));
-		vertices.add(new Vertex("Blue Parking Grarage (PG2)"));
-		vertices.add(new Vertex("Panther Hall"));
-		vertices.add(new Vertex("Green Library"));
-		vertices.add(new Vertex("University Towers"));
-		vertices.add(new Vertex("Charles E. Perry"));
-		vertices.add(new Vertex("College of Law"));
-		vertices.add(new Vertex("Frost Art Museum"));
-		vertices.add(new Vertex("Parking Garage 3"));
-		vertices.add(new Vertex("Parking Garage 4 (Red Parking Garage)"));
-		vertices.add(new Vertex("college of Business"));
-		vertices.add(new Vertex("Wertheim School of music and preforming arts"));
-		vertices.add(new Vertex("Knight Foundation School of Computing and Information Sciences"));
-		vertices.add(new Vertex("Fiu the Honors College"));
-		
-		
-		System.out.println(vertices); 
-	}
+
+    public List<PathVertex> dijkstra(GraphExtension g, Vertex v) {
+        List<PathVertex> pathVertices = initializeSingleSource(g, v);
+        List<PathVertex> unvisited = new ArrayList<>(pathVertices);
+
+        while (!unvisited.isEmpty()) {
+            PathVertex current = null;
+            int min = Integer.MAX_VALUE;
+            for (PathVertex pv : unvisited) {
+                if (pv.getDistance() < min) {
+                    current = pv;
+                    min = pv.getDistance();
+                }
+            }
+
+            if (min == Integer.MAX_VALUE) {
+                break;
+            }
+
+            current.setVisited(true);
+            List<Edge> ie = g.incidentEdges(current);
+
+            unvisited.remove(current);
+
+            for (Edge edges : ie) {
+                Vertex adjacentV = edges.vertex2;
+                PathVertex adjacentPV = null;
+
+                for (PathVertex pv : pathVertices) {
+                    if (pv.getLabel().equals(adjacentV.getLabel())) {
+                        adjacentPV = pv;
+                        break;
+                    }
+                }
+
+                if (adjacentPV != null && !adjacentPV.isVisited()) {
+                    relaxEdge(current, adjacentPV, edges.weight);
+                }
+            }
+        }
+
+        return pathVertices;
+    }
+
+    private void relaxEdge(PathVertex current, PathVertex adjacentPV, int edgeWeight) {
+        int newDistance = current.getDistance() + edgeWeight;
+        if (newDistance < adjacentPV.getDistance()) {
+            adjacentPV.setDistance(newDistance);
+            adjacentPV.setParent(current);
+        }
+    }
+
+    private List<PathVertex> initializeSingleSource(GraphExtension g, Vertex source) {
+        List<PathVertex> pathVertices = new ArrayList<>();
+
+        for (Vertex v : g.getVertices()) {
+            PathVertex pv = new PathVertex(v.getLabel());
+            if (v.getLabel().equals(source.getLabel())) {
+                pv.setDistance(0);
+            }
+            pathVertices.add(pv);
+        }
+
+        return pathVertices;
+    }
+
+    public List<Vertex> shortestPath(GraphExtension g, Vertex source, Vertex target) {
+        List<PathVertex> pathVertices = dijkstra(g, source);
+
+        PathVertex targetPV = null;
+        for (PathVertex pv : pathVertices) {
+            if (pv.getLabel().equals(target.getLabel())) {
+                targetPV = pv;
+                break;
+            }
+        }
+
+        if (targetPV == null) {
+            throw new IllegalArgumentException("Target vertex not found in the graph");
+        }
+
+        LinkedList<Vertex> shortestPath = new LinkedList<>();
+        if (targetPV.getDistance() == Integer.MAX_VALUE) {
+            return shortestPath; // Empty path, since no path exists between the source and target vertices
+        }
+
+        PathVertex current = targetPV;
+        while (current != null) {
+            shortestPath.addFirst(current);
+            current = current.getParent();
+        }
+
+        return shortestPath;
+    }
 
 }
-
-// method to find the shortest path
-
-
-
-
-
-
-
-
