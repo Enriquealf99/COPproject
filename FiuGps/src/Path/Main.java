@@ -1,7 +1,9 @@
 package Path;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import Graph.Edge;
 import Graph.GraphExtension;
@@ -53,7 +55,7 @@ public class Main {
 		Vertex v13 = new Vertex("Parking Garage 4 (Red Parking Garage)");
 		vertices.add(v13);
 
-		Vertex v14 = new Vertex("college of Business");
+		Vertex v14 = new Vertex("college of Business"); // add edges
 		vertices.add(v14);
 
 		Vertex v15 = new Vertex("Wertheim School of music and preforming arts");
@@ -116,12 +118,75 @@ public class Main {
 		edges.add(new Edge(v10, v7, 2666));
 		edges.add(new Edge(v12, v10, 1813));
 
-		GraphImplementation gp = new GraphImplementation(vertices, edges);
+		GraphImplementation graph = new GraphImplementation(vertices, edges);
 
 		Path p = new Path();
-		System.out.println(p.shortestPath(gp, v1, v5));
+		System.out.println(p.shortestPath(graph, v1, v6));
 
+		Scanner scanner = new Scanner(System.in);
+		Path path = new Path();
+
+		System.out.println("Welcome");
+
+		while (true) {
+
+			System.out.println("Select your location and destination from the list below:");
+			for (int i = 0; i < vertices.size(); i++) {
+				System.out.println((i + 1) + ". " + vertices.get(i).getLabel());
+			}
+
+			System.out.print("Enter the number of your location or enter exit to leave the program: ");
+			int locationIndex = Integer.parseInt(scanner.nextLine()) - 1;
+			Vertex sourceVertex = vertices.get(locationIndex);
+
+			System.out.print("Enter the number of your destination: ");
+			int destinationIndex = Integer.parseInt(scanner.nextLine()) - 1;
+			Vertex destinationVertex = vertices.get(destinationIndex);
+
+			if (sourceVertex == null || destinationVertex == null) {
+				System.out.println("Invalid vertex label(s). Please try again.");
+			} else {
+				List<Vertex> shortestPath = path.shortestPath(graph, sourceVertex, destinationVertex);
+
+				if (shortestPath != null) {
+					PathVertex destinationPathVertex = null;
+					for (Vertex pv : shortestPath) {
+						if (pv.getLabel().equals(destinationVertex.getLabel())) {
+							destinationPathVertex = (PathVertex) pv;
+							break;
+						}
+					}
+
+					if (destinationPathVertex != null) {
+						List<String> pathLabels = new ArrayList<>();
+						int totalDistance = destinationPathVertex.getDistance();
+						while (destinationPathVertex != null) {
+							pathLabels.add(destinationPathVertex.getLabel());
+							destinationPathVertex = destinationPathVertex.getParent();
+						}
+
+						Collections.reverse(pathLabels);
+
+						System.out.println("Shortest path: ");
+						for (String label : pathLabels) {
+							System.out.print(label + " -> ");
+						}
+						System.out.println();
+						System.out.println("Total distance: " + totalDistance + " ft.");
+					} else {
+						System.out.println("No path found between the source and destination vertices.");
+					}
+				} else {
+					System.out.println("No path found between the source and destination vertices.");
+				}
+
+				System.out.println("Do you want to continue? if not enter exit.");
+				String exit = scanner.nextLine();
+				if (exit.equals("exit")) {
+					break;
+				}
+			}
+		}
+		scanner.close();
 	}
 }
-
-// method to find the shortest path
