@@ -41,4 +41,23 @@ public abstract class GraphExtension implements Graph {
         return vertices;
     }
 
+    public Vertex getVertexByLabel(String label) {
+        for (Vertex vertex : vertices) {
+            if (vertex.getLabel().equals(label)) {
+                return vertex;
+            }
+        }
+        return null;
+    }
+
+    public int getEdgeWeight(Vertex v1, Vertex v2) {
+        for (Edge edge : edges) {
+            if ((edge.vertex1.equals(v1) && edge.vertex2.equals(v2))
+                    || (edge.vertex1.equals(v2) && edge.vertex2.equals(v1))) {
+                return edge.weight;
+            }
+        }
+        return 0;
+    }
+
 }
