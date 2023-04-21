@@ -117,6 +117,16 @@ public class Main {
 		edges.add(new Edge(v10, v8, 2136));
 		edges.add(new Edge(v10, v7, 2666));
 		edges.add(new Edge(v12, v10, 1813));
+		edges.add(new Edge(v14, v12, 944));
+		edges.add(new Edge(v14, v1, 1090));
+		edges.add(new Edge(v14, v16, 1087));
+		edges.add(new Edge(v14, v10, 566));
+		edges.add(new Edge(v14, v7, 1076));
+		edges.add(new Edge(v12, v14, 944));
+		edges.add(new Edge(v1, v14, 1090));
+		edges.add(new Edge(v16, v14, 1087));
+		edges.add(new Edge(v10, v14, 566));
+		edges.add(new Edge(v7, v14, 1076));
 
 		GraphImplementation graph = new GraphImplementation(vertices, edges);
 
