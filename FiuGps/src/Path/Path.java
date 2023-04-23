@@ -96,7 +96,7 @@ public class Path {
 
         LinkedList<Vertex> shortestPath = new LinkedList<>();
         if (targetPV.getDistance() == Integer.MAX_VALUE) {
-            return shortestPath; // Empty path, since no path exists between the source and target vertices
+            return shortestPath;
         }
 
         PathVertex current = targetPV;
