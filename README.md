@@ -1,5 +1,12 @@
 # COPproject
+Members:
+Enrique Alfonso
+Sebastian Helver
 
+Contribution:
+It is impossible to determine each person's contribution to the project because we both collaborated on it simultaneously.
+
+Program Explanation: 
 This program represents the Fiu campus map as a graph and finds the shortest path between two locations on the map. It prompts the user to choose their current location and destination from a list of campus locations, then calculates the shortest path between the chosen locations and prints the path and its total distance.
 
 The program starts by creating a list of Vertex objects, which represent campus locations. It then creates a list of Edge objects, which represent the distances between pairs of locations. The edges are added in both directions to create an undirected graph.
@@ -16,4 +23,4 @@ PathVertex class: This class extends the Vertex class and is used in Dijkstra's 
 
 Path class: This class implements Dijkstra's algorithm for finding the shortest path between two vertices in a graph. It has a single method, shortestPath(GraphImplementation graph, Vertex source, Vertex destination), which takes a graph, a source vertex, and a destination vertex as parameters and returns a list of Vertex objects representing the shortest path between the source and destination. If no path is found, it returns null.
 
-Main class: This class contains the main method and is the entry point for the program. It initializes the vertices, edges, and graph, and interacts with the user to get their current location and destination, calculates the shortest path between the chosen locations, and prints the path and its total distance. The program continues running until the user decides to exit.
+Main class: This class contains the main method and is the entry point for the program. It initializes the vertices, edges, and graph, and interacts with the user to get their current location and destination, calculates the shortest path between the chosen locations, and prints the path and its total distance. 
