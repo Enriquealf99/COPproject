@@ -14,8 +14,9 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		List<Vertex> vertices = new ArrayList<>();
+		List<Vertex> vertices = new ArrayList<>(); // initialize vertices
 
+		// add vertices
 		Vertex v1 = new Vertex("PG6");
 		vertices.add(v1);
 
@@ -67,8 +68,9 @@ public class Main {
 		Vertex v17 = new Vertex("Fiu the Honors College");
 		vertices.add(v17);
 
-		List<Edge> edges = new ArrayList<>();
+		List<Edge> edges = new ArrayList<>(); // initialize list of edges
 
+		// add edges
 		edges.add(new Edge(v1, v13, 1260));
 		edges.add(new Edge(v1, v16, 860));
 		edges.add(new Edge(v1, v12, 3705));
@@ -128,31 +130,32 @@ public class Main {
 		edges.add(new Edge(v10, v14, 566));
 		edges.add(new Edge(v7, v14, 1076));
 
-		GraphImplementation graph = new GraphImplementation(vertices, edges);
-
-		Path p = new Path();
-		System.out.println(p.shortestPath(graph, v1, v6));
+		GraphImplementation graph = new GraphImplementation(vertices, edges); // create object of graph implementation
 
 		Scanner scanner = new Scanner(System.in);
-		Path path = new Path();
+		Path path = new Path(); // create path
 
 		System.out.println("Welcome");
 
 		while (true) {
 
+			// print the list of locations for the user
 			System.out.println("Select your location and destination from the list below:");
 			for (int i = 0; i < vertices.size(); i++) {
 				System.out.println((i + 1) + ". " + vertices.get(i).getLabel());
 			}
 
+			// ask the user to input his location
 			System.out.print("Enter the number of your location or enter exit to leave the program: ");
 			int locationIndex = Integer.parseInt(scanner.nextLine()) - 1;
 			Vertex sourceVertex = vertices.get(locationIndex);
 
+			// ask the user to input his destination
 			System.out.print("Enter the number of your destination: ");
 			int destinationIndex = Integer.parseInt(scanner.nextLine()) - 1;
 			Vertex destinationVertex = vertices.get(destinationIndex);
 
+			// Check if the user's input is valid
 			if (sourceVertex == null || destinationVertex == null) {
 				System.out.println("Invalid vertex label(s). Please try again.");
 			} else {
@@ -167,6 +170,8 @@ public class Main {
 						}
 					}
 
+					// If the destination vertex is found, construct the path and calculate the
+					// total distance
 					if (destinationPathVertex != null) {
 						List<String> pathLabels = new ArrayList<>();
 						int totalDistance = destinationPathVertex.getDistance();
@@ -175,8 +180,10 @@ public class Main {
 							destinationPathVertex = destinationPathVertex.getParent();
 						}
 
+						// Reverse the path labels list, since it was constructed in reverse order
 						Collections.reverse(pathLabels);
 
+						// Display the shortest path and the total distance
 						System.out.println("Shortest path: ");
 						for (String label : pathLabels) {
 							System.out.print(label + " -> ");
@@ -190,6 +197,7 @@ public class Main {
 					System.out.println("No path found between the source and destination vertices.");
 				}
 
+				// Check if the user wants to continue or exit the program
 				System.out.println("Do you want to continue? if not enter exit.");
 				String exit = scanner.nextLine();
 				if (exit.equals("exit")) {
